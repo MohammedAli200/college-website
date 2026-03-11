@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Search, ChevronDown, ArrowRight, Menu, X, Mail, Phone, GraduationCap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,13 +29,50 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "About", submenu: ["Trustees", "Governing Body", "Vision", "Principal's Desk", "Disclosures"] },
-    { name: "Programs", submenu: ["Diploma", "UG", "PG"] },
-    { name: "Admissions", submenu: ["Procedure", "Fee Structure", "Prospectus"] },
-    { name: "Departments", submenu: ["CSE", "AI & ML", "Civil", "MECH", "EEE", "ECE", "MBA", "MCA"] },
-    { name: "Facilities", submenu: ["Library", "Auditorium", "Digital Rooms", "Hostels", "Sports"] },
-    { name: "Placements", submenu: ["Placement Cell", "Statistics", "Top Recruiters"] },
-    { name: "Exams", submenu: ["Syllabus", "Results", "Academic Calendar"] },
+    { name: "About", submenu: [
+      { name: "Trustees", href: "/about/trustees" },
+      { name: "Governing Body", href: "/about/governing-body" },
+      { name: "Vision", href: "/about/vision" },
+      { name: "Principal's Desk", href: "/about/principal" },
+      { name: "Disclosures", href: "/about/disclosures" }
+    ] },
+    { name: "Programs", submenu: [
+      { name: "Diploma", href: "/programs/diploma" },
+      { name: "UG", href: "/programs/ug" },
+      { name: "PG", href: "/programs/pg" }
+    ] },
+    { name: "Admissions", submenu: [
+      { name: "Procedure", href: "/admissions/procedure" },
+      { name: "Fee Structure", href: "/admissions/fee-structure" },
+      { name: "Prospectus", href: "/admissions/prospectus" }
+    ] },
+    { name: "Departments", submenu: [
+      { name: "CSE", href: "/departments/cse" }, 
+      { name: "AI & ML", href: "/departments/aiml" }, 
+      { name: "Civil", href: "/departments/civil" }, 
+      { name: "MECH", href: "/departments/mech" }, 
+      { name: "EEE", href: "/departments/eee" }, 
+      { name: "ECE", href: "/departments/ece" }, 
+      { name: "MBA", href: "/departments/mba" }, 
+      { name: "MCA", href: "/departments/mca" }
+    ] },
+    { name: "Facilities", submenu: [
+      { name: "Library", href: "/facilities/library" },
+      { name: "Auditorium", href: "/facilities/auditorium" },
+      { name: "Digital Rooms", href: "/facilities/digital-rooms" },
+      { name: "Hostels", href: "/facilities/hostels" },
+      { name: "Sports", href: "/facilities/sports" }
+    ] },
+    { name: "Placements", submenu: [
+      { name: "Placement Cell", href: "/placements/cell" },
+      { name: "Statistics", href: "/placements/statistics" },
+      { name: "Top Recruiters", href: "/placements/recruiters" }
+    ] },
+    { name: "Exams", submenu: [
+      { name: "Syllabus", href: "/exams/syllabus" },
+      { name: "Results", href: "/exams/results" },
+      { name: "Academic Calendar", href: "/exams/calendar" }
+    ] },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -78,7 +116,7 @@ const Navbar = () => {
         >
           
           {/* Logo Section */}
-          <a href="/" className="flex items-center gap-2 sm:gap-3 group relative shrink-0">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group relative shrink-0">
             <div className={`flex items-center justify-center rounded-xl bg-gradient-to-br from-[#7A1F1F] to-[#5a1616] transition-all duration-300 shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5
               ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`}
             >
@@ -96,7 +134,7 @@ const Navbar = () => {
                 Anantapur
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center justify-center gap-1 2xl:gap-3 flex-1 px-2">
@@ -107,8 +145,8 @@ const Navbar = () => {
                 onMouseEnter={() => setActiveDropdown(link.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <a
-                  href={link.href || '#'}
+                <Link
+                  to={link.href || '#'}
                   className={`flex items-center gap-1 px-1.5 2xl:px-2 py-2 rounded-lg text-[11px] 2xl:text-[13px] font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap
                     ${activeDropdown === link.name ? 'text-[#7A1F1F] bg-[#7A1F1F]/5' : 'text-[#6B4F3B] hover:text-[#7A1F1F] hover:bg-[#7A1F1F]/5'}
                   `}
@@ -120,7 +158,7 @@ const Navbar = () => {
                       className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180 text-[#7A1F1F]' : 'opacity-60'}`} 
                     />
                   )}
-                </a>
+                </Link>
 
                 {/* Refined Dropdown with Hover Bridge */}
                 {link.submenu && (
@@ -132,16 +170,21 @@ const Navbar = () => {
                     <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden">
                       <div className="h-1 w-full bg-gradient-to-r from-[#7A1F1F] via-[#D4AF37] to-[#7A1F1F]"></div>
                       <div className="py-2 px-2 flex flex-col relative">
-                        {link.submenu.map((item) => (
-                          <a
-                            key={item}
-                            href="#"
-                            className="group/item flex items-center justify-between px-4 py-3 text-[13px] font-semibold text-gray-600 rounded-xl hover:text-[#7A1F1F] hover:bg-[#FFF7E6] transition-all"
-                          >
-                            <span className="relative z-10 transition-transform group-hover/item:translate-x-1">{item}</span>
-                            <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-[#D4AF37]" />
-                          </a>
-                        ))}
+                        {link.submenu.map((item) => {
+                          const isObj = typeof item === 'object';
+                          const itemName = isObj ? item.name : item;
+                          const itemHref = isObj && item.href ? item.href : '#';
+                          return (
+                            <Link
+                              key={itemName}
+                              to={itemHref}
+                              className="group/item flex items-center justify-between px-4 py-3 text-[13px] font-semibold text-gray-600 rounded-xl hover:text-[#7A1F1F] hover:bg-[#FFF7E6] transition-all"
+                            >
+                              <span className="relative z-10 transition-transform group-hover/item:translate-x-1">{itemName}</span>
+                              <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-[#D4AF37]" />
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -217,13 +260,13 @@ const Navbar = () => {
                     <ChevronDown size={18} className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
                   </button>
                 ) : (
-                  <a 
-                    href={link.href || '#'}
+                  <Link 
+                    to={link.href || '#'}
                     className="flex items-center justify-between py-4 text-left font-bold uppercase tracking-wider text-sm border-b border-[#EADBC8]/50 transition-colors text-[#6B4F3B] hover:text-[#7A1F1F]"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 )}
                 
                 {link.submenu && (
@@ -232,16 +275,22 @@ const Navbar = () => {
                     ${activeDropdown === link.name ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0'}`}
                   >
                     <div className="flex flex-col gap-2 pl-4 py-2 border-l-2 border-[#D4AF37]/40 bg-white/40 rounded-r-xl">
-                      {link.submenu.map((item) => (
-                        <a 
-                          key={item} 
-                          href="#" 
-                          className="py-2.5 px-4 text-sm font-semibold text-gray-700 hover:text-[#7A1F1F] hover:bg-white rounded-lg transition-colors flex items-center justify-between group"
-                        >
-                          {item}
-                          <ArrowRight size={14} className="text-[#D4AF37] opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
-                        </a>
-                      ))}
+                      {link.submenu.map((item) => {
+                        const isObj = typeof item === 'object';
+                        const itemName = isObj ? item.name : item;
+                        const itemHref = isObj && item.href ? item.href : '#';
+                        return (
+                          <Link 
+                            key={itemName} 
+                            to={itemHref} 
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="py-2.5 px-4 text-sm font-semibold text-gray-700 hover:text-[#7A1F1F] hover:bg-white rounded-lg transition-colors flex items-center justify-between group"
+                          >
+                            {itemName}
+                            <ArrowRight size={14} className="text-[#D4AF37] opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
