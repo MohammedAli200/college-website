@@ -1,315 +1,170 @@
 import React, { useState, useEffect } from "react";
-import { Search, ChevronDown, ArrowRight, Menu, X, Mail, Phone, GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { ChevronDown, Phone, Mail, GraduationCap, MapPin, Sparkles } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isMobileMenuOpen]);
-
-  const navLinks = [
+  // Updated to match your App.js Routes exactly
+  const menuItems = [
     { name: "Home", href: "/" },
-    { name: "About", submenu: [
-      { name: "Trustees", href: "/about/trustees" },
-      { name: "Governing Body", href: "/about/governing-body" },
-      { name: "Vision", href: "/about/vision" },
-      { name: "Principal's Desk", href: "/about/principal" },
-      { name: "Disclosures", href: "/about/disclosures" }
-    ] },
-    { name: "Programs", submenu: [
-      { name: "Diploma", href: "/programs/diploma" },
-      { name: "UG", href: "/programs/ug" },
-      { name: "PG", href: "/programs/pg" }
-    ] },
-    { name: "Admissions", submenu: [
-      { name: "Procedure", href: "/admissions/procedure" },
-      { name: "Fee Structure", href: "/admissions/fee-structure" },
-      { name: "Prospectus", href: "/admissions/prospectus" }
-    ] },
-    { name: "Departments", submenu: [
-      { name: "CSE", href: "/departments/cse" }, 
-      { name: "AI & ML", href: "/departments/aiml" }, 
-      { name: "Civil", href: "/departments/civil" }, 
-      { name: "MECH", href: "/departments/mech" }, 
-      { name: "EEE", href: "/departments/eee" }, 
-      { name: "ECE", href: "/departments/ece" }, 
-      { name: "MBA", href: "/departments/mba" }, 
-      { name: "MCA", href: "/departments/mca" }
-    ] },
-    { name: "Facilities", submenu: [
-      { name: "Library", href: "/facilities/library" },
-      { name: "Auditorium", href: "/facilities/auditorium" },
-      { name: "Digital Rooms", href: "/facilities/digital-rooms" },
-      { name: "Hostels", href: "/facilities/hostels" },
-      { name: "Sports", href: "/facilities/sports" }
-    ] },
-    { name: "Placements", submenu: [
-      { name: "Placement Cell", href: "/placements/cell" },
-      { name: "Statistics", href: "/placements/statistics" },
-      { name: "Top Recruiters", href: "/placements/recruiters" }
-    ] },
-    { name: "Exams", submenu: [
-      { name: "Syllabus", href: "/exams/syllabus" },
-      { name: "Results", href: "/exams/results" },
-      { name: "Academic Calendar", href: "/exams/calendar" }
-    ] },
-    { name: "Contact", href: "/contact" },
+    {
+      name: "About Us",
+      submenu: [
+        { name: "Founder", href: "/about/founder" },
+        { name: "Trustees", href: "/about/trustees" },
+        { name: "Governing Body", href: "/about/governing-body" },
+        { name: "Academic Council", href: "/about/academic-council" },
+        { name: "Vision & Mission", href: "/about/vision" },
+        { name: "Chairmans Message", href: "/about/chairmansmessage" },
+        { name: "VIce Chairmans Message", href: "/about/vicechairmansmessage" },
+        { name: "About ALTS", href: "/about/aboutalts" },
+
+
+        { name: "Principal's Desk", href: "/about/principal" },
+
+      ]
+    },
+    {
+      name: "Programs",
+      submenu: [
+        { name: "B.Tech (UG)", href: "/programs/ug/offered" },
+        { name: "M.Tech/MBA (PG)", href: "/programs/pg/offered" },
+        { name: "Diploma", href: "/programs/diploma/offered" },
+      ]
+    },
+    {
+      name: "Admissions",
+      submenu: [
+        { name: "Procedure", href: "/admissions/procedure" },
+        { name: "Fee Structure", href: "/admissions/fee-structure" },
+        { name: "Prospectus", href: "/admissions/prospectus" },
+      ]
+    },
+    {
+      name: "Departments",
+      submenu: [
+        { name: "CSE", href: "/departments/cse" },
+        { name: "AIML", href: "/departments/aiml" },
+        { name: "ECE", href: "/departments/ece" },
+        { name: "EEE", href: "/departments/eee" },
+        { name: "Civil", href: "/departments/civil" },
+        { name: "MBA", href: "/departments/mba" },
+      ]
+    },
+    {
+      name: "Alumni",
+      submenu: [
+        { name: "Alumni Portal", href: "/alumni/portal" },
+        { name: "Register", href: "/alumni/register" },
+        { name: "Stories", href: "/alumni/stories" },
+        { name: "Events", href: "/alumni/events" },
+      ]
+    },
+    {
+      name: "Placements",
+      submenu: [
+        { name: "Cell", href: "/placements/cell" },
+        { name: "Statistics", href: "/placements/statistics" },
+        { name: "Recruiters", href: "/placements/recruiters" },
+      ]
+    },
+    {
+      name: "Exams",
+      submenu: [
+        { name: "Syllabus", href: "/exams/syllabus" },
+        { name: "Results", href: "/exams/results" },
+        { name: "Calendar", href: "/exams/calendar" },
+      ]
+    },
+    { name: "Contact", href: "/contact" }
   ];
 
   return (
-    <nav className="fixed w-full top-0 left-0 z-[1000] font-sans flex flex-col items-center">
-      
-      {/* Top Bar - Sliding up on scroll */}
-      <div 
-        className={`w-full bg-[#7A1F1F] text-[#FFF7E6] flex justify-center transition-all duration-500 origin-top overflow-hidden 
-        ${isScrolled ? "h-0 opacity-0" : "h-10 opacity-100"}`}
-      >
-        <div className="w-full max-w-7xl px-4 sm:px-6 flex justify-between items-center text-[10px] sm:text-xs tracking-wider">
-          <div className="flex items-center gap-3 sm:gap-6">
-            <span className="flex items-center gap-1.5 sm:gap-2 group cursor-pointer hover:text-[#D4AF37] transition-colors">
-              <GraduationCap size={14} className="text-[#D4AF37] group-hover:scale-110 transition-transform sm:w-4 sm:h-4" /> 
-              <span className="font-bold">CODE: ALTS</span>
-            </span>
-            <span className="hidden md:flex items-center gap-2 group cursor-pointer hover:text-[#D4AF37] transition-colors">
-              <Mail size={14} className="text-[#D4AF37] group-hover:scale-110 transition-transform" /> 
-              principal@alits.ac.in
-            </span>
+    <header className="fixed w-full top-0 left-0 z-[1000] font-sans">
+      {/* 1. TOP INFO BAR */}
+      <div className={`bg-white transition-all duration-500 overflow-hidden border-b border-slate-100 ${isScrolled ? "h-0 opacity-0" : "h-20 opacity-100"}`}>
+        <div className="max-w-[1500px] mx-auto px-8 h-full flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-[#b22222] rounded-xl flex items-center justify-center text-[#d4af37] font-black text-2xl shadow-lg border border-white/20">AL</div>
+            <div>
+              <h1 className="text-[#b22222] font-serif font-black text-xl leading-tight uppercase tracking-tighter">Anantha Lakshmi</h1>
+              <p className="text-[#b22222] text-[10px] font-bold tracking-[0.2em] -mt-1 uppercase opacity-80">Institute of Technology & Sciences</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4 sm:gap-6">
-            <a href="#" className="hidden sm:block hover:text-[#D4AF37] transition-colors">Student Portal</a>
-            <a href="#" className="hidden sm:block hover:text-[#D4AF37] transition-colors">Alumni</a>
-            <span className="flex items-center gap-1.5 sm:gap-2 bg-[#5a1616] px-2 sm:px-3 py-1 rounded-full text-[#D4AF37] font-bold shadow-inner">
-              <Phone size={12} /> +91 9533513999
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* Main Navbar - Floating Glass Container */}
-      <div className={`w-full transition-all duration-500 ease-in-out px-4 flex justify-center ${isScrolled ? 'py-4' : 'py-5'}`}>
-        <div 
-          className={`w-full max-w-7xl flex items-center justify-between transition-all duration-500
-          ${isScrolled 
-            ? 'bg-white/90 backdrop-blur-2xl px-4 sm:px-6 py-3 rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-white/40' 
-            : 'bg-[#FFF7E6]/95 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-[0_4px_20px_-10px_rgba(122,31,31,0.1)] border border-[#EADBC8]'
-          }`}
-        >
-          
-          {/* Logo Section */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 group relative shrink-0">
-            <div className={`flex items-center justify-center rounded-xl bg-gradient-to-br from-[#7A1F1F] to-[#5a1616] transition-all duration-300 shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5
-              ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`}
-            >
-              <span className="text-[#D4AF37] font-serif font-bold text-xl uppercase tracking-tighter">AL</span>
+          <div className="hidden lg:flex items-center gap-8">
+            <div className="flex flex-col items-end border-r pr-6 border-slate-200">
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Code: ALTS</span>
+              <span className="text-xs font-bold text-slate-700 flex items-center gap-2"><Mail size={12} className="text-[#b22222]" /> principal@alits.ac.in</span>
             </div>
             <div className="flex flex-col">
-              <span className={`font-serif font-bold uppercase leading-none tracking-tight transition-colors duration-300 text-[#7A1F1F]
-                ${isScrolled ? 'text-xl' : 'text-2xl'}`}
-              >
-                ALITS
-              </span>
-              <span className={`font-semibold uppercase text-[#D4AF37] tracking-[0.3em] transition-all duration-300
-                ${isScrolled ? 'text-[8px]' : 'text-[10px]'}`}
-              >
-                Anantapur
-              </span>
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Contact</span>
+              <span className="text-sm font-black text-[#b22222] tracking-tighter">+91 95335 13999</span>
             </div>
-          </Link>
+          </div>
+        </div>
+      </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center justify-center gap-1 2xl:gap-3 flex-1 px-2">
-            {navLinks.map((link) => (
+      {/* 2. MAIN NAVIGATION (The "Upgrade" Design) */}
+      <nav className={`w-full transition-all duration-500 flex justify-center ${isScrolled ? "py-4" : "py-0"}`}>
+        <div className={`w-full transition-all duration-500 flex justify-center relative shadow-2xl ${isScrolled
+          ? "max-w-[1300px] bg-[#b22222]/90 backdrop-blur-2xl rounded-full border border-white/20 py-1"
+          : "max-w-full bg-[#b22222] py-1 border-y border-white/10"
+          }`}>
+          <div className="flex items-center justify-center gap-1 w-full px-4">
+            {menuItems.map((item) => (
               <div
-                key={link.name}
-                className="relative group py-2"
-                onMouseEnter={() => setActiveDropdown(link.name)}
-                onMouseLeave={() => setActiveDropdown(null)}
+                key={item.name}
+                className="relative"
+                onMouseEnter={() => setActiveMenu(item.name)}
+                onMouseLeave={() => setActiveMenu(null)}
               >
                 <Link
-                  to={link.href || '#'}
-                  className={`flex items-center gap-1 px-1.5 2xl:px-2 py-2 rounded-lg text-[11px] 2xl:text-[13px] font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap
-                    ${activeDropdown === link.name ? 'text-[#7A1F1F] bg-[#7A1F1F]/5' : 'text-[#6B4F3B] hover:text-[#7A1F1F] hover:bg-[#7A1F1F]/5'}
-                  `}
+                  to={item.href || "#"}
+                  className={`flex items-center gap-1 px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-all rounded-full ${location.pathname === item.href ? "text-[#d4af37] bg-white/10" : "text-white hover:text-[#d4af37] hover:bg-white/5"
+                    }`}
                 >
-                  {link.name}
-                  {link.submenu && (
-                    <ChevronDown 
-                      size={14} 
-                      className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180 text-[#7A1F1F]' : 'opacity-60'}`} 
-                    />
-                  )}
+                  {item.name}
+                  {item.submenu && <ChevronDown size={12} className={`opacity-40 transition-transform duration-300 ${activeMenu === item.name ? "rotate-180 opacity-100" : ""}`} />}
                 </Link>
 
-                {/* Refined Dropdown with Hover Bridge */}
-                {link.submenu && (
-                  <div 
-                    className={`absolute top-full left-1/2 -translate-x-1/2 w-[220px] pt-4 transition-all duration-300 origin-top
-                    ${activeDropdown === link.name ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible'}
-                    `}
-                  >
-                    <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden">
-                      <div className="h-1 w-full bg-gradient-to-r from-[#7A1F1F] via-[#D4AF37] to-[#7A1F1F]"></div>
-                      <div className="py-2 px-2 flex flex-col relative">
-                        {link.submenu.map((item) => {
-                          const isObj = typeof item === 'object';
-                          const itemName = isObj ? item.name : item;
-                          const itemHref = isObj && item.href ? item.href : '#';
-                          return (
-                            <Link
-                              key={itemName}
-                              to={itemHref}
-                              className="group/item flex items-center justify-between px-4 py-3 text-[13px] font-semibold text-gray-600 rounded-xl hover:text-[#7A1F1F] hover:bg-[#FFF7E6] transition-all"
-                            >
-                              <span className="relative z-10 transition-transform group-hover/item:translate-x-1">{itemName}</span>
-                              <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-[#D4AF37]" />
-                            </Link>
-                          );
-                        })}
-                      </div>
+                {/* Dropdown - Modern Floating Glass */}
+                {item.submenu && activeMenu === item.name && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="bg-white/95 backdrop-blur-3xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-white/50 overflow-hidden py-3 p-1">
+                      {item.submenu.map((sub) => (
+                        <Link
+                          key={sub.name}
+                          to={sub.href}
+                          onClick={() => setActiveMenu(null)}
+                          className="block px-5 py-2.5 text-[11px] font-bold text-slate-600 hover:bg-[#b22222] hover:text-white rounded-xl transition-all mb-1 last:mb-0"
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 )}
               </div>
             ))}
-          </div>
 
-          {/* Action Buttons */}
-          <div className="hidden xl:flex items-center gap-2 2xl:gap-4 shrink-0">
-            <button className="p-2 text-[#6B4F3B] hover:text-[#7A1F1F] hover:bg-[#7A1F1F]/10 rounded-full transition-colors">
-              <Search size={18} strokeWidth={2.5} />
-            </button>
-            <a 
-              href="#apply" 
-              className="relative group overflow-hidden rounded-full p-[2px] shrink-0"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-[#D4AF37] via-[#FFF7E6] to-[#D4AF37] rounded-full opacity-70 group-hover:opacity-100 animate-[spin_3s_linear_infinite]" />
-              <div className="relative flex items-center gap-1.5 2xl:gap-2 bg-[#7A1F1F] px-4 2xl:px-6 py-2 2xl:py-2.5 rounded-full text-[#FFF7E6] font-bold text-[11px] 2xl:text-[13px] uppercase tracking-widest transition-all group-hover:bg-[#5a1616] whitespace-nowrap">
-                Apply Now
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform text-[#D4AF37]" />
-              </div>
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="xl:hidden p-2 text-[#7A1F1F] hover:bg-[#7A1F1F]/10 rounded-full transition-colors shrink-0"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <Menu size={26} strokeWidth={2.5} />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer Navigation */}
-      <div 
-        className={`fixed inset-0 z-[2000] xl:hidden transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}
-      >
-        {/* Backdrop */}
-        <div 
-          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-        
-        {/* Drawer */}
-        <div 
-          className={`absolute right-0 top-0 bottom-0 w-[85vw] max-w-md bg-[#FFF7E6] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col
-          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-[#EADBC8]">
-            <span className="text-xl font-serif font-bold text-[#7A1F1F] tracking-tight">ALITS</span>
-            <button 
-              className="p-2 rounded-full bg-white text-[#7A1F1F] shadow-sm active:scale-95 transition-transform"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          {/* Nav Items */}
-          <div className="flex-1 overflow-y-auto py-4 px-6 flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <div key={link.name} className="flex flex-col">
-                {link.submenu ? (
-                  <button 
-                    className={`flex items-center justify-between py-4 text-left font-bold uppercase tracking-wider text-sm border-b border-[#EADBC8]/50 transition-colors
-                      ${activeDropdown === link.name ? 'text-[#7A1F1F]' : 'text-[#6B4F3B] hover:text-[#7A1F1F]'}`}
-                    onClick={() => setActiveDropdown(activeDropdown === link.name ? null : link.name)}
-                  >
-                    <span>{link.name}</span>
-                    <ChevronDown size={18} className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
-                  </button>
-                ) : (
-                  <Link 
-                    to={link.href || '#'}
-                    className="flex items-center justify-between py-4 text-left font-bold uppercase tracking-wider text-sm border-b border-[#EADBC8]/50 transition-colors text-[#6B4F3B] hover:text-[#7A1F1F]"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                )}
-                
-                {link.submenu && (
-                  <div 
-                    className={`overflow-hidden transition-all duration-300 ease-in-out
-                    ${activeDropdown === link.name ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0'}`}
-                  >
-                    <div className="flex flex-col gap-2 pl-4 py-2 border-l-2 border-[#D4AF37]/40 bg-white/40 rounded-r-xl">
-                      {link.submenu.map((item) => {
-                        const isObj = typeof item === 'object';
-                        const itemName = isObj ? item.name : item;
-                        const itemHref = isObj && item.href ? item.href : '#';
-                        return (
-                          <Link 
-                            key={itemName} 
-                            to={itemHref} 
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="py-2.5 px-4 text-sm font-semibold text-gray-700 hover:text-[#7A1F1F] hover:bg-white rounded-lg transition-colors flex items-center justify-between group"
-                          >
-                            {itemName}
-                            <ArrowRight size={14} className="text-[#D4AF37] opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Footer of Drawer */}
-          <div className="p-6 bg-white border-t border-[#EADBC8]">
-            <a 
-              href="#apply" 
-              className="flex items-center justify-center gap-2 w-full py-4 text-white font-bold bg-[#7A1F1F] rounded-xl uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all"
-            >
-              Apply Now <ArrowRight size={18} className="text-[#D4AF37]" />
-            </a>
+            {/* Action Button */}
+            <Link to="/contact" className="ml-4 bg-white text-[#b22222] px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#d4af37] hover:text-[#b22222] transition-all shadow-lg flex items-center gap-2">
+              Apply <Sparkles size={12} />
+            </Link>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 
